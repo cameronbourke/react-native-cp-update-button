@@ -1,0 +1,11 @@
+{
+  "name": "rn-cp-update-button",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cameron Bourke <cameron2295@gmail.com> (http://cameronbourke.com/)",
+  "license": "MIT"
+}
