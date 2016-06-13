@@ -1,0 +1,17 @@
+{
+  "name": "UpdateButtonDemo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "babel-preset-react-native-stage-0": "1.0.1",
+    "react": "15.1.0",
+    "react-native": "0.27.2",
+    "react-native-code-push": "1.12.2-beta"
+  },
+  "devDependencies": {
+    "native-promise-only": "0.8.1"
+  }
+}
