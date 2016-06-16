@@ -1,4 +1,4 @@
-react-native-cp-update-button
+React Native CodePush Update Button
 =============================
 
 [CodePush](https://microsoft.github.io/code-push/) is really great tool to deploy React Native app updates directly to our users' devices without the need of going through the App or Play Store. However, sometimes we need to give more control to our users to let them update the app as opposed to silently updating it in the background. The goal of `react-native-cp-update-button` is to make this updating workflow straight forward and quick to implement.
@@ -8,9 +8,9 @@ react-native-cp-update-button
 * [Installation](#installation)
 * [Demo & Example](#demo--example)
 * [Components](#components)
-		* [<UpdateAppButton />](updateappbutton-)
-		* [<AppVersion />](appversion-)
-		* [<Middot />](middot-)
+	* [<UpdateAppButton />](updateappbutton-)
+	* [<AppVersion />](appversion-)
+	* [<Middot />](middot-)
 * [Basic Usage](#basic-usage)
 * [Advanced Usage](#advanced-usage)
 * [Animation](#animation)
@@ -119,12 +119,12 @@ class App extends React.Component {
 ## Animation
 
 ## Deploying Updates
-One of best parts about `react-native-cp-update-button` is that it does not need any new tooling, you can just use the `code-push` cli like you normally would to push updates to your React Native app. Everything the component needs to know is achieved by setting a stringified object for the `--description` option in the cli. An example command to deploy an update may look like the following:
+One of best parts about `react-native-cp-update-button` is that it does not need any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. Everything the component needs to know is achieved by using a stringified object for the `--description` option in the cli. An example command to deploy an update may look like the following:
 
 ```
 code-push release-react UpdateButtonDemo ios -d Production --description '{"version":"1.3.0", "promptMessage": "There are plenty of new features in this goodie of an update"}'
 ```
 
-If a value for `promptTitle, promptMessage or confirmButtonText` is on the stringified object, it will be used over the corresponding value/s that were passed as props to `<UpdateAppButton />`
+If a value for `promptTitle, promptMessage` or `confirmButtonText` is in the object, it will be used over the corresponding value/s that were passed as props to `<UpdateAppButton />`
 
 > Note: if the object is not stringified correctly, none of the data within the object will be used and instead will default to the default values
