@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Text } from 'react-native';
 import codePush, { UpdateState } from 'react-native-code-push';
 import { getVersionMetaData } from './lib/utils';
+import makeCancelable from './lib/makeCancelable';
 
 export class AppVersion extends Component {
 	constructor () {
@@ -13,8 +14,15 @@ export class AppVersion extends Component {
 	}
 
 	componentDidMount () {
-		codePush.getUpdateMetadata(UpdateState.RUNNING)
-		.then(this._handleLocalVersion);
+		const cancelablePromise = makeCancelable(codePush.getUpdateMetadata(UpdateState.RUNNING));
+		cancelablePromise.promise
+		.then(this._handleLocalVersion)
+		.catch((err) => console.log('[CodePush update] download caught an error', err));
+		this._cancelablePromise = cancelablePromise;
+	}
+
+	componentWillUnmount () {
+		this._cancelablePromise.cancel();
 	}
 
 	_handleLocalVersion (runningVersion) {
@@ -25,10 +33,11 @@ export class AppVersion extends Component {
 	}
 
 	render () {
-		if (!this.state.versionNumber.length) return null;
+		const currentVersion = this.state.versionNumber || this.props.binary;
+		if (!currentVersion) return null;
 		return (
 			<Text style={this.props.style}>
-				v{this.state.versionNumber}
+				v{currentVersion}
 			</Text>
 		);
 	}
@@ -39,6 +48,8 @@ AppVersion.defaultProps = {
 };
 
 AppVersion.propTypes = {
+	binary: PropTypes.string,
+	style: PropTypes.obj,
 	// yet to be determined
 };
 

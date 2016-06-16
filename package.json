@@ -4,9 +4,11 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+		"start": "compile:dev && start:ios",
+		"start:ios": "node example/UpdateButtonDemo/node_modules/react-native/local-cli/cli.js start",
     "compile:production": "babel src -w --out-dir dist",
     "compile:dev": "babel src -w --out-dir example/UpdateButtonDemo/dev/react-native-cp-update-button",
-		"prepublish": "npm run compile:production",
+    "prepublish": "npm run compile:production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
@@ -15,14 +17,14 @@
   "author": "Cameron Bourke <cameron2295@gmail.com> (http://cameronbourke.com/)",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=15.0.0"
+    "react": ">=15.0.0",
+		"react-native": ">=15.0.0",
+		"react-native-code-push": ">=1.12.2-beta"
   },
   "devDependencies": {
     "babel-cli": "6.10.1",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-react": "6.5.0"
   },
-  "dependencies": {
-    "native-promise-only": "0.8.1"
-  }
+  "dependencies": {}
 }

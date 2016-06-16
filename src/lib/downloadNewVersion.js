@@ -1,5 +1,4 @@
 import codePush, { UpdateState } from 'react-native-code-push';
-import Promise from 'native-promise-only';
 
 const downloadNewVersion = (downloadProgressCallback) => {
 	return new Promise((resolve, reject) => {
