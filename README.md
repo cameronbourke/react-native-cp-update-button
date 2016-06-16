@@ -6,13 +6,13 @@ react-native-cp-update-button
 > Currently iOS is only supported, however Android support will land shortly!
 
 * [Installation](#installation)
-* [Demo & Example](#demo-&-example)
-* [Components](#Components)
-		* [<UpdateAppButton />](<UpdateAppButton />)
-		* [<AppVersion />](#<AppVersion />)
-		* [<Middot />](#<Middot />)
+* [Demo & Example](#demo--example)
+* [Components](#components)
+		* [<UpdateAppButton />](updateappbutton-)
+		* [<AppVersion />](appversion-)
+		* [<Middot />](middot-)
 * [Basic Usage](#basic-usage)
-* [Advanced Usage](#android-setup)
+* [Advanced Usage](#advanced-usage)
 * [Animation](#animation)
 * [Deploying Updates](#deploying-updates)
 
@@ -51,7 +51,7 @@ import {
 ## Components
 `react-native-cp-update-button` is made up of three React components that provide the building blocks to quickly add a button to allow your users to update their version of the app installed.
 
-### `<UpdateAppButton />`
+#### `<UpdateAppButton />`
 This component gives you the ability to simply invoke a function to show a confirmation prompt to the user that will update the app immediately when the confirmation button is pressed.
 
 | Property          | Type     | Default     | Description
@@ -63,7 +63,7 @@ This component gives you the ability to simply invoke a function to show a confi
 | promptMessage     | string   | A new update is now available. Do you want to update now? Note: Updating will restart the app and any changes not saved will be lost. | body of the confirmation prompt shown to the user
 | confirmButtonText | string   | Update Now  | the text for the confirmation prompt's confirm button
 
-### `<AppVersion />`
+#### `<AppVersion />`
 This component will display the installed CodePush version, **not** the binary version of the app. Make sure to read over [Deploying Updates](#deploying-updates) to understand how to set the app version.
 
 | Property          | Type     | Default         | Description
@@ -71,7 +71,7 @@ This component will display the installed CodePush version, **not** the binary v
 | binary            | string   | true (required) | if there are not any installs from CodePush yet on the device, no value for the version is returned and therefore you need to specific what the binary version of the installed app was
 | style             | object   |                 | accepts all the style properties for the <Text /> component
 
-### `<Middot />`
+#### `<Middot />`
 A common pattern these days is to show a middot to indicate there is a notification component, think Slack for example. To save you building your own, you can import one prepared a little earlier.
 
 | Property          | Type     | Default      | Description
