@@ -3,7 +3,7 @@ React Native CodePush Update Button
 
 [CodePush](https://microsoft.github.io/code-push/) is really great tool to deploy React Native app updates directly to our users' devices without the need of going through the App or Play Store. However, sometimes we need to give more control to our users to let them update the app as opposed to silently updating it in the background. The goal of `react-native-cp-update-button` is to make this updating workflow straight forward and quick to implement.
 
-![](http://demo.gif)
+<img src="./demo.gif" width="320" />
 
 > Currently iOS is only supported, however Android support will land shortly!
 
