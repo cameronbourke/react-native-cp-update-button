@@ -7,9 +7,7 @@ import makeCancelable from './lib/makeCancelable';
 export class AppVersion extends Component {
 	constructor () {
 		super();
-		this.state = {
-			versionNumber: '',
-		};
+		this.state = { versionNumber: '' };
 		this._handleLocalVersion = this._handleLocalVersion.bind(this);
 	}
 
@@ -17,7 +15,7 @@ export class AppVersion extends Component {
 		const cancelablePromise = makeCancelable(codePush.getUpdateMetadata(UpdateState.RUNNING));
 		cancelablePromise.promise
 		.then(this._handleLocalVersion)
-		.catch((err) => console.log('[CodePush update] download caught an error', err));
+		.catch((err) => console.log('[react-native-cp-update-button] download caught an error', err));
 		this._cancelablePromise = cancelablePromise;
 	}
 
@@ -44,13 +42,15 @@ export class AppVersion extends Component {
 }
 
 AppVersion.defaultProps = {
-	// yet to be determined
+	style: {
+		fontSize: 18,
+		fontStyle: 'italic',
+	},
 };
 
 AppVersion.propTypes = {
 	binary: PropTypes.string,
-	style: PropTypes.obj,
-	// yet to be determined
+	style: Text.propTypes.style,
 };
 
 

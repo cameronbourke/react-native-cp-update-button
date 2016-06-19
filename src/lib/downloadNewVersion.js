@@ -1,14 +1,21 @@
 import codePush, { UpdateState } from 'react-native-code-push';
 
+// If there already been a remotePackage downloaded
+// use that instead of making a another trip to the server
+let cachedVersion;
+
 const downloadNewVersion = (downloadProgressCallback) => {
 	return new Promise((resolve, reject) => {
+		if (cachedVersion) return resolve(cachedVersion);
 		// If there is a local update pending use that instead of fetching
 		// a potential new update from the server
 		codePush.getUpdateMetadata(UpdateState.PENDING).then((localUpdate) => {
+			cachedVersion = localUpdate;
 			if (localUpdate) return resolve(localUpdate);
 			// Queries the CodePush service to see whether the configured app deployment has an update available.
 			// By default, it will use the deployment key that is configured in your Info.plist file (iOS), or MainActivity.java file (Android)
 			codePush.checkForUpdate().then((remoteUpdate) => {
+				cachedVersion = remoteUpdate;
 				if (!remoteUpdate) return resolve(null);
 				/*
 				remoteUpdate === null can be due to the following reasons:

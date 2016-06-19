@@ -8,9 +8,7 @@ import makeCancelable from './lib/makeCancelable';
 export class UpdateAppButton extends Component {
 	constructor () {
 		super();
-		this.state = {
-			newVersion: null,
-		};
+		this.state = { newVersion: null };
 		this.handleUpdatePress = this.handleUpdatePress.bind(this);
 		this._handleNewVersion = this._handleNewVersion.bind(this);
 		this.install = this.install.bind(this);
@@ -22,7 +20,7 @@ export class UpdateAppButton extends Component {
 		const cancelablePromise = makeCancelable(downloadNewVersion());
 		cancelablePromise.promise
 		.then(this._handleNewVersion)
-		.catch((err) => console.log('[CodePush update] download caught an error', err));
+		.catch((err) => console.log('[react-native-cp-update-button] download caught an error', err));
 		this._cancelablePromise = cancelablePromise;
 	}
 
@@ -52,7 +50,7 @@ export class UpdateAppButton extends Component {
 				onPress: this.install,
 			}, {
 				text: 'Cancel',
-				onPress: () => console.log('[CodePush update] cancel update pressed'),
+				onPress: () => console.log('[react-native-cp-update-button] cancel update pressed'),
 				style: 'cancel',
 			}]
 		);
@@ -76,7 +74,6 @@ UpdateAppButton.defaultProps = {
 	promptMessage: 'A new update is now available. Do you want to update now? Note: Updating will restart the app and any changes not saved will be lost.',
 	promptTitle: 'New Update Available',
 	confirmButtonText: 'Update Now',
-	// yet to be determined
 };
 
 UpdateAppButton.propTypes = {
@@ -86,7 +83,6 @@ UpdateAppButton.propTypes = {
 	promptTitle: PropTypes.string,
 	promptMessage: PropTypes.string,
 	confirmButtonText: PropTypes.string,
-	// yet to be determined
 };
 
 export default UpdateAppButton;
