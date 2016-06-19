@@ -8,7 +8,7 @@ React Native CodePush Update Button
 > Currently iOS is only supported, however Android support will land shortly!
 
 * [Installation](#installation)
-* [Demo & Example](#demo--example)
+* [Demo & Example](#example--demo)
 * [Components](#components)
 	* [`<UpdateAppButton />`](#updateappbutton--)
 	* [`<AppVersion />`](#appversion-)
@@ -50,7 +50,7 @@ import {
 
 #### Changing the CodePush Deployment Key
 
-In order to get CodePush working for the example, you will need to change the deployment key for the iOS app. First you will need to [create a CodePush app](), and then change the value of `CodePushDeploymentKey` in the `info.plist` to the staging key of the app you just created to using the `code-push cli`.
+In order to get CodePush working for the example, you will need to change the deployment key for the iOS app. First you will need to [create a CodePush app](https://github.com/Microsoft/code-push/tree/master/cli#app-management), and then change the value of `CodePushDeploymentKey` in the `info.plist` to the staging key of the app you just created to using the `code-push cli`.
 
 
 ## Components
@@ -100,7 +100,7 @@ One of best parts about `react-native-cp-update-button` is that it does not requ
 If there is value for `promptTitle, promptMessage` or `confirmButtonText` in the object, it has a higher priority over the corresponding value/s that were passed as props to `<UpdateAppButton />`
 
 ### Example Deployment
-Say you are happy with `v1.3.0`, you tag it (hopefully) and are about to release it using CodePush like you normally would. The only difference is now you will need to add the `--description` option and pass it a value. In this example, you are giving the update a version number, which will be used by `<AppVersion />`, and a promptMessage which will be displayed within the body of the confirmation prompt. Viloa, deployment using an update button done!
+Say you are happy with `v1.3.0`, you tag it (hopefully) and are about to release it using CodePush like you normally would. The only difference is now you will need to add the `--description` option and pass it a value. In this example, you are giving the update a version number, which will be used by `<AppVersion />`, and a promptMessage which will be displayed within the body of the confirmation prompt. Voilà, deployment using an update button done!
 
 ```
 code-push release-react YourApp ios -d Production --description '{"version":"1.3.0", "promptMessage": "There are plenty of new features in this goodie of an update"}'

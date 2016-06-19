@@ -1,8 +1,19 @@
 {
   "name": "react-native-cp-update-button",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "The goal of this component is to make the workflow of letting your users explicitly update the app as simple as CodePush.sync()",
   "main": "dist/index.js",
+	"keywords": [
+		"update",
+		"react-native",
+		"react-component",
+		"button",
+		"code-push",
+		"CodePush",
+		"prompt",
+		"manual-update",
+		"ui",
+	],
   "scripts": {
 		"start": "npm run compile:dev",
 		"start:ios": "node example/UpdateButtonDemo/node_modules/react-native/local-cli/cli.js start",

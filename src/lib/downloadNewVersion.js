@@ -1,7 +1,9 @@
 import codePush, { UpdateState } from 'react-native-code-push';
 
-// If there already been a remotePackage downloaded
+/* If there already been a remotePackage downloaded
 // use that instead of making a another trip to the server
+// NOTE: Will not need to reassign to this local variable once this issue,
+// https://github.com/Microsoft/react-native-code-push/issues/383, has been resolved */
 let cachedVersion;
 
 const downloadNewVersion = (downloadProgressCallback) => {
