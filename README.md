@@ -1,7 +1,7 @@
 React Native CodePush Update Button
-=============================
+===================================
 
-[CodePush](https://microsoft.github.io/code-push/) is really great tool to deploy React Native app updates directly to our users' devices without the need of going through the App or Play Store. However, sometimes we need to give more control to our users to let them update the app as opposed to silently updating it in the background. The goal of `react-native-cp-update-button` is to make this updating workflow straight forward and quick to implement.
+[CodePush](https://microsoft.github.io/code-push/) is really great tool to deploy React Native app updates directly to our users' devices without the need of going through the App or Play Store. However, sometimes we need to explicit control to our users to update the app, as opposed to silently updating it in the background. The goal of `react-native-cp-update-button` is to make this updating workflow straight forward and quick to implement.
 
 <img src="./demo.gif" width="320" />
 
@@ -13,10 +13,9 @@ React Native CodePush Update Button
 	* [`<UpdateAppButton />`](#updateappbutton--)
 	* [`<AppVersion />`](#appversion-)
 	* [`<Middot />`](#middot-)
+* [Deploying Updates](#deploying-updates)
 * [Basic Usage](#basic-usage)
 * [Advanced Usage](#advanced-usage)
-* [Animation](#animation)
-* [Deploying Updates](#deploying-updates)
 
 ## Installation
 ```
@@ -48,6 +47,10 @@ import {
 	AppVersion
 } from './dev/react-native-cp-update-button';
 ```
+
+#### Changing the CodePush Deployment Key
+
+In order to get CodePush working for the example, you will need to change the deployment key for the iOS app. First you will need to [create a CodePush app](), and then change the value of `CodePushDeploymentKey` in the `info.plist` to the staging key of the app you just created to using the `code-push cli`.
 
 
 ## Components
@@ -82,8 +85,29 @@ A common pattern these days is to show a middot to indicate there is a notificat
 | size              | number   |  22          | specifies the size of the outer circle
 
 
+## Deploying Updates
+One of best parts about `react-native-cp-update-button` is that it does not require any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. Everything that the components need to know is achieved by using a stringified object as the value for the `--description` option in the cli. The object can have the following properties:
+
+> Note: if the object is not stringified correctly, none of the data within the object will be used and instead will fallback to the default values
+
+| Property          | Description
+|------------------ | --------
+| version           | the version number that <AppVersion /> will display
+| promptTitle       | *same as <UpdateAppButton />*   
+| promptMessage     | *same as <UpdateAppButton />*   
+| confirmButtonText | *same as <UpdateAppButton />*   
+
+If there is value for `promptTitle, promptMessage` or `confirmButtonText` in the object, it has a higher priority over the corresponding value/s that were passed as props to `<UpdateAppButton />`
+
+### Example Deployment
+Say you are happy with `v1.3.0`, you tag it (hopefully) and are about to release it using CodePush like you normally would. The only difference is now you will need to add the `--description` option and pass it a value. In this example, you are giving the update a version number, which will be used by `<AppVersion />`, and a promptMessage which will be displayed within the body of the confirmation prompt. Viloa, deployment using an update button done!
+
+```
+code-push release-react YourApp ios -d Production --description '{"version":"1.3.0", "promptMessage": "There are plenty of new features in this goodie of an update"}'
+```
+
 ## Basic Usage
-The gist of how this works is that you need to create a component to pass to `<UpdateAppButton />`. In the example below, `AppLogo` is a simple component that renders the app logo and only shows `<Middot />` when a new version is available for the user to download. Notice, the component has access to two props:
+The gist of how this works is that you need to create a component to pass to `<UpdateAppButton />`. In the example below, `AppLogo` is a simple component that renders an image of the app logo and only shows `<Middot />` when a new version is available for the user to download. Notice, the component has access to two props:
 - **newVersion**: either will be `null` if there is no new version, or a `CodePush` [localPackage](https://github.com/Microsoft/react-native-code-push#localpackage)
 - **shownUpdatePrompt**: function that when called will show a confirmation prompt to update the app
 
@@ -115,18 +139,12 @@ class App extends React.Component {
 	}
 }
 ```
+The behaviour of this example will follow:
+- When there is new CodePush version available, the `TouchableOpacity` will stop being disabled, and the `Middot` will appear.
+- This will inform the end user that their is a new version ready to install.
+- Once the end user presses on `AppLogo`, the `shownUpdatePrompt` function passed to down as props will be called.
+- This will cause a confirmation prompt to appear, using the `default props` for the title, message and confirmation button.
+- Once the end user presses the "Update Now" button, the app will restart with that new version immediately.
 
 ## Advanced Usage
-
-## Animation
-
-## Deploying Updates
-One of best parts about `react-native-cp-update-button` is that it does not need any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. Everything the component needs to know is achieved by using a stringified object for the `--description` option in the cli. An example command to deploy an update may look like the following:
-
-```
-code-push release-react UpdateButtonDemo ios -d Production --description '{"version":"1.3.0", "promptMessage": "There are plenty of new features in this goodie of an update"}'
-```
-
-If a value for `promptTitle, promptMessage` or `confirmButtonText` is in the object, it will be used over the corresponding value/s that were passed as props to `<UpdateAppButton />`
-
-> Note: if the object is not stringified correctly, none of the data within the object will be used and instead will default to the default values
+For more advanced usages for `react-native-cp-update-button`, check out examples `2 & 3` within the example app. For an example on how to animate the update button without using the default animation, check out example `4`. This will outline how you can utilise React Native's `Animate API` to achieve more complex interactions and animations when a new version becomes available.
