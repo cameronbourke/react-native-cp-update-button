@@ -93,11 +93,11 @@ One of best parts about `react-native-cp-update-button` is that it does not requ
 | Property          | Description
 |------------------ | --------
 | version           | the version number that <AppVersion /> will display
-| promptTitle       | *same as <UpdateAppButton />*   
-| promptMessage     | *same as <UpdateAppButton />*   
-| confirmButtonText | *same as <UpdateAppButton />*   
+| promptTitle       | *same as `<UpdateAppButton />`*   
+| promptMessage     | *same as `<UpdateAppButton />`*   
+| confirmButtonText | *same as `<UpdateAppButton />`*   
 
-If there is value for `promptTitle, promptMessage` or `confirmButtonText` in the object, it has a higher priority over the corresponding value/s that were passed as props to `<UpdateAppButton />`
+If there is value for `promptTitle, promptMessage` or `confirmButtonText` in the object, it has a higher priority over the corresponding value/s that were passed as props to `<UpdateAppButton />` and therefore will be used by the component.
 
 ### Example Deployment
 Say you are happy with `v1.3.0`, you tag it (hopefully) and are about to release it using CodePush like you normally would. The only difference is now you will need to add the `--description` option and pass it a value. In this example, you are giving the update a version number, which will be used by `<AppVersion />`, and a promptMessage which will be displayed within the body of the confirmation prompt. Voilà, deployment using an update button done!
