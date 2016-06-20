@@ -1,11 +1,11 @@
 React Native CodePush Update Button
 ===================================
 
-[CodePush](https://microsoft.github.io/code-push/) is really great tool to deploy React Native app updates directly to our users' devices without the need of going through the App or Play Store. However, sometimes we need to explicit control to our users to update the app, as opposed to silently updating it in the background. The goal of `react-native-cp-update-button` is to make this updating workflow straight forward and quick to implement.
+[CodePush](https://microsoft.github.io/code-push/) is a really great tool to deploy React Native app updates directly to our users' devices without the need of going through the App or Play Store. Sometimes, however, we need to explicitly prompt our users to update the app, as opposed to silently updating it in the background. The goal of `react-native-cp-update-button` is to make this updating workflow straight forward and quick to implement.
 
 <img src="./demo.gif" width="320" />
 
-> Currently iOS is only supported, however Android support will land shortly!
+> Currently only iOS is supported, however Android support will land shortly!
 
 * [Installation](#installation)
 * [Demo & Example](#example--demo)
@@ -38,7 +38,7 @@ npm install
 
 Then open the Xcode project at `ios/UpdateButtonDemo.xcodeproj`
 
-Currently `npm link` does not work with React Native's packager, so temporarily to get around that `npm start` actually runs a babel command that will output the `/src` directory into `/example/UpdateButtonDemo/dev` which explains why you will see the following when in the example app:
+Currently `npm link` does not work with React Native's packager, so, to temporarily get around that, `npm start` actually runs a babel command that will output the `/src` directory into `/example/UpdateButtonDemo/dev` which explains why you will see the following when in the example app:
 
 ```js
 import {
@@ -88,7 +88,7 @@ A common pattern these days is to show a middot to indicate there is a notificat
 ## Deploying Updates
 One of best parts about `react-native-cp-update-button` is that it does not require any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. Everything that the components need to know is achieved by using a stringified object as the value for the `--description` option in the cli. The object can have the following properties:
 
-> Note: if the object is not stringified correctly, none of the data within the object will be used and instead will fallback to the default values
+> Note: if the object is not stringified correctly, none of the data within the object will be used and instead will fall back to the default values
 
 | Property          | Description
 |------------------ | --------
@@ -140,8 +140,8 @@ class App extends React.Component {
 }
 ```
 The behaviour of this example will follow:
-- When there is new CodePush version available, the `TouchableOpacity` will stop being disabled, and the `Middot` will appear.
-- This will inform the end user that their is a new version ready to install.
+- When there is a new CodePush version available, the `TouchableOpacity` will stop being disabled, and the `Middot` will appear.
+- This will inform the end user that there is a new version ready to install.
 - Once the end user presses on `AppLogo`, the `shownUpdatePrompt` function passed to down as props will be called.
 - This will cause a confirmation prompt to appear, using the `default props` for the title, message and confirmation button.
 - Once the end user presses the "Update Now" button, the app will restart with that new version immediately.
