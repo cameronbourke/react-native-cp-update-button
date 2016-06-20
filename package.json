@@ -12,7 +12,7 @@
 		"CodePush",
 		"prompt",
 		"manual-update",
-		"ui",
+		"ui"
 	],
   "scripts": {
 		"start": "npm run compile:dev",
