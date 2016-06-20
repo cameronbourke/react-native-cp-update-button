@@ -43,7 +43,7 @@ class UpdateButtonDemo extends React.Component {
 						component={AppName}
 						animated={true}
 						promptTitle="What's New?"
-						alertMessage='This is where you would show the value passed to --description when releasing with code push.'
+						promptMessage='This is where you would show the value passed to --description when releasing with code push.'
 						confirmButtonText="Lets do it!"
 					/>
 
