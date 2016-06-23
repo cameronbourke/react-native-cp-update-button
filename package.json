@@ -1,6 +1,6 @@
 {
   "name": "react-native-cp-update-button",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The goal of this component is to make the workflow of letting your users explicitly update the app as simple as CodePush.sync()",
   "main": "dist/index.js",
 	"keywords": [
@@ -17,7 +17,7 @@
   "scripts": {
 		"start": "npm run compile:dev",
 		"start:ios": "node example/UpdateButtonDemo/node_modules/react-native/local-cli/cli.js start",
-    "compile:production": "babel src -w --out-dir dist",
+    "compile:production": "babel src --out-dir dist",
     "compile:dev": "babel src -w --out-dir example/UpdateButtonDemo/dev/react-native-cp-update-button",
     "prepublish": "npm run compile:production",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,7 +29,7 @@
   "license": "MIT",
   "peerDependencies": {
     "react": ">=15.0.0",
-		"react-native": ">=15.0.0",
+		"react-native": ">=0.27.0",
 		"react-native-code-push": ">=1.12.2-beta"
   },
   "devDependencies": {

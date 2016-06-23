@@ -23,8 +23,8 @@ npm install --save react-native-cp-update-button
 ```
 
 Note, `react-native-cp-update-button` also requires on the following dependencies:
-- [React Native](https://facebook.github.io/react-native/) 15.0 or later
-- [React](https://facebook.github.io/react/) 0.15 or later
+- [React Native](https://facebook.github.io/react-native/) 0.27 or later
+- [React](https://facebook.github.io/react/) 15.0 or later
 - [React Native Code Push](https://github.com/Microsoft/react-native-code-push) 1.12.2-beta or later
 
 ## Example & Demo
