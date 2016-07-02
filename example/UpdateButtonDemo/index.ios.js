@@ -13,15 +13,24 @@ import { Tabs, Panels } from './components';
 import {
 	UpdateAppButton,
 	Middot,
-	AppVersion
 } from './dev/react-native-cp-update-button';
+
+/*
+APP_VERSION would usually live in a constants module where
+you would increment it each time you release a new version
+*/
+const APP_VERSION = 'v1.7.4';
+
+const AppVersion = () => (
+	<Text style={styles.appVersion}>
+		{APP_VERSION}
+	</Text>
+);
 
 class UpdateButtonDemo extends React.Component {
 	constructor () {
 		super();
-		this.state = {
-			selectedIndex: 0,
-		};
+		this.state = { selectedIndex: 0 };
 	}
 
 	render () {
@@ -64,10 +73,7 @@ class UpdateButtonDemo extends React.Component {
 				{/*  Installed App Version */}
 				<Text style={styles.footer}>
 					Installed App Version: {'  '}
-					<AppVersion
-						style={styles.appVersion}
-						binary='1.2.0'
-					/>
+					<AppVersion />
 				</Text>
 			</View>
 		);

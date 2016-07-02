@@ -11,9 +11,8 @@ React Native CodePush Update Button
 * [Demo & Example](#example--demo)
 * [Components](#components)
 	* [`<UpdateAppButton />`](#updateappbutton--)
-	* [`<AppVersion />`](#appversion-)
 	* [`<Middot />`](#middot-)
-* [Deploying Updates](#deploying-updates)
+* [Releasing Updates](#releasing-updates)
 * [Basic Usage](#basic-usage)
 * [Advanced Usage](#advanced-usage)
 
@@ -44,7 +43,6 @@ Currently `npm link` does not work with React Native's packager, so, to temporar
 import {
 	UpdateAppButton,
 	Middot,
-	AppVersion
 } from './dev/react-native-cp-update-button';
 ```
 
@@ -68,14 +66,6 @@ This component gives you the ability to simply invoke a function to show a confi
 | promptMessage     | string   | A new update is now available. Do you want to update now? Note: Updating will restart the app and any changes not saved will be lost. | body of the confirmation prompt shown to the user
 | confirmButtonText | string   | Update Now  | the text for the confirmation prompt's confirm button
 
-#### `<AppVersion />`
-This component will display the installed CodePush version, **not** the binary version of the app. Make sure to read over [Deploying Updates](#deploying-updates) to understand how to set the app version.
-
-| Property          | Type     | Default         | Description
-|------------------ | -------- | --------------- | --------
-| binary            | string   | true (required) | if there are not any installs from CodePush yet on the device, no value for the version is returned and therefore you need to specific what the binary version of the installed app was
-| style             | object   |                 | accepts all the style properties for the <Text /> component
-
 #### `<Middot />`
 A common pattern these days is to show a middot to indicate there is a notification component, think Slack for example. To save you building your own, you can import one prepared a little earlier.
 
@@ -85,26 +75,18 @@ A common pattern these days is to show a middot to indicate there is a notificat
 | size              | number   |  22          | specifies the size of the outer circle
 
 
-## Deploying Updates
-One of best parts about `react-native-cp-update-button` is that it does not require any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. Everything that the components need to know is achieved by using a stringified object as the value for the `--description` option in the cli. The object can have the following properties:
+## Releasing Updates
+One of best parts about `react-native-cp-update-button` is that it does not require any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. This is where you are able to set a `promptMessage` for this specific release, which will be used by the `<UpdateAppButton />` component. You can do this by giving a value for the `--description` option in the cli. Check out the docs on (releasing with `CodePush`)[https://github.com/Microsoft/react-native-code-push#releasing-updates] for more detail.
 
-> Note: if the object is not stringified correctly, none of the data within the object will be used and instead will fall back to the default values
-
-| Property          | Description
-|------------------ | --------
-| version           | the version number that <AppVersion /> will display
-| promptTitle       | *same as `<UpdateAppButton />`*   
-| promptMessage     | *same as `<UpdateAppButton />`*   
-| confirmButtonText | *same as `<UpdateAppButton />`*   
-
-If there is value for `promptTitle, promptMessage` or `confirmButtonText` in the object, it has a higher priority over the corresponding value/s that were passed as props to `<UpdateAppButton />` and therefore will be used by the component.
+If a value for `promptMessage` was passed to `<UpdateAppButton />` as a prop in the application, it will only be used if no value for `--description` was added when releasing the update.
 
 ### Example Deployment
-Say you are happy with `v1.3.0`, you tag it (hopefully) and are about to release it using CodePush like you normally would. The only difference is now you will need to add the `--description` option and pass it a value. In this example, you are giving the update a version number, which will be used by `<AppVersion />`, and a promptMessage which will be displayed within the body of the confirmation prompt. Voilà, deployment using an update button done!
+Say you are happy with `v1.3.0`, you tag it (hopefully) and are about to release it using CodePush like you normally would. The only difference is now you will need to add the `--description` option and pass it a value.
+```
+code-push release-react YourApp ios -d Production --description "There are plenty of new features in this goodie of an update"
+```
 
-```
-code-push release-react YourApp ios -d Production --description '{"version":"1.3.0", "promptMessage": "There are plenty of new features in this goodie of an update"}'
-```
+> Note: If you use the mandatory flag (-m) when releasing using the code-push cli, it will override the behaviour of allowing your users to update the app when they choose and therefore this component will **not** work as expected.
 
 ## Basic Usage
 The gist of how this works is that you need to create a component to pass to `<UpdateAppButton />`. In the example below, `AppLogo` is a simple component that renders an image of the app logo and only shows `<Middot />` when a new version is available for the user to download. Notice, the component has access to two props:
@@ -112,7 +94,7 @@ The gist of how this works is that you need to create a component to pass to `<U
 - **shownUpdatePrompt**: function that when called will show a confirmation prompt to update the app
 
 ```js
-import { AppUpdateButton, Middot, AppVersion } from 'react-native-cp-update-button';
+import { AppUpdateButton, Middot } from 'react-native-cp-update-button';
 
 const AppLogo = ({ newVersion, shownUpdatePrompt }) => (
 	<TouchableOpacity
@@ -124,7 +106,7 @@ const AppLogo = ({ newVersion, shownUpdatePrompt }) => (
 );
 ```
 
-Now all that is left to do is to render these components. You don't need to have both `UpdateAppButton` and `AppVersion` together, but for the sake of simplification the `App` component below does.  
+Now all that is left to do is to render `UpdateAppButton` and pass it the `AppLogo` component as a prop.  
 ```js
 class App extends React.Component {
 	...
@@ -133,7 +115,6 @@ class App extends React.Component {
 			<View>
 				...
 				<UpdateAppButton component={AppLogo} />
-				<AppVersion binary='1.0.0' />
 			</View>
 		)
 	}

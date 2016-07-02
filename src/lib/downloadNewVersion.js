@@ -30,7 +30,10 @@ const downloadNewVersion = (downloadProgressCallback) => {
 				// downloadProgressCallback is periodically called with a DownloadProgress object
 				// than looks like { totalBytes: Number, receivedBytes: Number }
 				.download(downloadProgressCallback)
-				.then(resolve);
+				.then((localUpdate) => {
+					cachedVersion = localUpdate;
+					return resolve(localUpdate);
+				});
 			});
 		});
 	});

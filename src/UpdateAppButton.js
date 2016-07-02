@@ -35,18 +35,16 @@ export class UpdateAppButton extends Component {
 	}
 
 	handleUpdatePress () {
-		const {promptTitle, promptMessage, updateOnPress, confirmButtonText} = this.props;
-		if (updateOnPress) return this.install();
-		const metaData = getVersionMetaData(this.state.newVersion);
+		if (this.props.updateOnPress) return this.install();
+		const {description} = this.state.newVersion;
 
 		Alert.alert(
-			// title
-			metaData.promptTitle || promptTitle,
-			// mesage (body)
-			metaData.promptMessage || promptMessage,
+
+			this.props.promptTitle, // title
+			description || this.props.promptMessage, // mesage (body)
 			// buttons
 			[{
-				text: metaData.confirmButtonText || confirmButtonText,
+				text: this.props.confirmButtonText,
 				onPress: this.install,
 			}, {
 				text: 'Cancel',

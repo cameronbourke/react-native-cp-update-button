@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+		"release:staging": "code-push release-react UpdateButtonDemo ios -d Staging --description 'There are plenty of new features in this goodie of an update'",
+		"release:production": "code-push release-react UpdateButtonDemo ios -d Production --description 'There are plenty of new features in this goodie of an update'"
   },
   "dependencies": {
     "react": "15.1.0",
