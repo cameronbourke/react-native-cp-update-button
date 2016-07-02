@@ -76,7 +76,7 @@ A common pattern these days is to show a middot to indicate there is a notificat
 
 
 ## Releasing Updates
-One of best parts about `react-native-cp-update-button` is that it does not require any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. This is where you are able to set a `promptMessage` for this specific release, which will be used by the `<UpdateAppButton />` component. You can do this by giving a value for the `--description` option in the cli. Check out the docs on (releasing with `CodePush`)[https://github.com/Microsoft/react-native-code-push#releasing-updates] for more detail.
+One of best parts about `react-native-cp-update-button` is that it does not require any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. This is where you are able to set a `promptMessage` for this specific release, which will be used by the `<UpdateAppButton />` component. You can do this by giving a value for the `--description` option in the cli. Check out the docs on [releasing with `CodePush`](https://github.com/Microsoft/react-native-code-push#releasing-updates) for more detail.
 
 If a value for `promptMessage` was passed to `<UpdateAppButton />` as a prop in the application, it will only be used if no value for `--description` was added when releasing the update.
 
