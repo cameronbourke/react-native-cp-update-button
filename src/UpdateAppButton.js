@@ -1,31 +1,44 @@
 import React, { Component, PropTypes } from 'react';
-import { Alert, View, Text, LayoutAnimation } from 'react-native';
+import { Alert, View, Text, LayoutAnimation, AppState } from 'react-native';
 import { InstallMode } from 'react-native-code-push';
 import downloadNewVersion from './lib/downloadNewVersion';
 import { getVersionMetaData } from './lib/utils';
 import makeCancelable from './lib/makeCancelable';
 
 export class UpdateAppButton extends Component {
-	constructor () {
+	constructor ({ checkForUpdateOn, checkInterval }) {
 		super();
 		this.state = { newVersion: null };
 		this.handleUpdatePress = this.handleUpdatePress.bind(this);
 		this._handleNewVersion = this._handleNewVersion.bind(this);
 		this.install = this.install.bind(this);
+
+		if (checkForUpdateOn === 'resume') {
+			this._onAppStateChange =  (newState) => newState === 'active' && this._checkForUpdate();
+			AppState.addEventListener('change', this._onAppStateChange);
+		}
+
+		if (checkForUpdateOn === 'interval') {
+			this._interval = setTimeout(() => this._checkForUpdate(), checkInterval);
+		}
 	}
 
 	componentDidMount () {
-		// only fetch for an update if we don't have one in state already
-		if (this.state.newVersion) return;
+		if (this.props.checkForUpdateOn === 'mount') this._checkForUpdate();
+	}
+
+	componentWillUnmount () {
+		if (this._cancelablePromise) this._cancelablePromise.cancel();
+		if (this._onAppStateChange) AppState.removeEventListener('change', this._onAppStateChange);
+		if (this._interval) clearInterval(this._interval);
+	}
+
+	_checkForUpdate () {
 		const cancelablePromise = makeCancelable(downloadNewVersion());
 		cancelablePromise.promise
 		.then(this._handleNewVersion)
 		.catch((err) => console.log('[react-native-cp-update-button] download caught an error', err));
 		this._cancelablePromise = cancelablePromise;
-	}
-
-	componentWillUnmount () {
-		this._cancelablePromise.cancel();
 	}
 
 	_handleNewVersion (newVersion) {
@@ -39,7 +52,6 @@ export class UpdateAppButton extends Component {
 		const {description} = this.state.newVersion;
 
 		Alert.alert(
-
 			this.props.promptTitle, // title
 			description || this.props.promptMessage, // mesage (body)
 			// buttons
@@ -47,7 +59,7 @@ export class UpdateAppButton extends Component {
 				text: this.props.confirmButtonText,
 				onPress: this.install,
 			}, {
-				text: 'Cancel',
+				text: this.props.cancelButtonText,
 				onPress: () => console.log('[react-native-cp-update-button] cancel update pressed'),
 				style: 'cancel',
 			}]
@@ -69,17 +81,23 @@ export class UpdateAppButton extends Component {
 UpdateAppButton.defaultProps = {
 	animate: true,
 	updateOnPress: false,
-	promptMessage: 'A new update is now available. Do you want to update now? Note: Updating will restart the app and any changes not saved will be lost.',
+	checkForUpdateOn: 'mount',
+	checkInterval: 60 * 1000,
 	promptTitle: 'New Update Available',
+	promptMessage: 'A new update is now available. Do you want to update now? Note: Updating will restart the app and any changes not saved will be lost.',
+	cancelButtonText: 'Cancel',
 	confirmButtonText: 'Update Now',
 };
 
 UpdateAppButton.propTypes = {
 	animate: PropTypes.bool,
-	component: PropTypes.func.isRequired,
 	updateOnPress: PropTypes.bool,
+	component: PropTypes.func.isRequired,
+	checkForUpdateOn: PropTypes.oneOf(['mount', 'resume', 'interval']),
+	checkInterval: PropTypes.number,
 	promptTitle: PropTypes.string,
 	promptMessage: PropTypes.string,
+	cancelButtonText: PropTypes.string,
 	confirmButtonText: PropTypes.string,
 };
 

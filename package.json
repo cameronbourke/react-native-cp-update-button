@@ -17,10 +17,11 @@
   "scripts": {
 		"start": "npm run compile:dev",
 		"start:ios": "node example/UpdateButtonDemo/node_modules/react-native/local-cli/cli.js start",
-    "compile:production": "babel src --out-dir dist",
+    "compile:dist": "babel src --out-dir dist",
     "compile:dev": "babel src -w --out-dir example/UpdateButtonDemo/dev/react-native-cp-update-button",
-    "prepublish": "npm run compile:production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "npm run compile:dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+		"release": "npm version 1.2.0 && git push && git push --tags && npm publish"
   },
   "files": [
     "dist"
