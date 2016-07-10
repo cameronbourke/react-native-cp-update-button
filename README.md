@@ -78,7 +78,7 @@ The behaviour of this example will follow:
 For more advanced usages for `react-native-cp-update-button`, check out examples `2 & 3` within the example app. For an example on how to animate the update button without using the default animation, check out example `4`. This will outline how you can utilise React Native's `Animate API` to achieve more complex interactions and animations when a new version becomes available.
 
 ## Components
-`react-native-cp-update-button` is made up of three React components that provide the building blocks to quickly add a button to allow your users to update their version of the app installed.
+`react-native-cp-update-button` is made up of two React components that provide the building blocks to quickly add a button to allow your users to update their version of the app installed.
 
 #### `<UpdateAppButton />`
 This component gives you the ability to simply invoke a function to show a confirmation prompt to the user that will update the app immediately when the confirmation button is pressed.
@@ -104,6 +104,8 @@ A common pattern these days is to show a middot to indicate there is a notificat
 | color             | string   | #e74c3c      | background color for the outer circle
 | size              | number   |  22          | specifies the size of the outer circle
 
+</br>
+
 ## Example & Demo
 ```
 git clone https://github.com/cameronbourke/react-native-cp-update-button
@@ -128,7 +130,7 @@ In order to get CodePush working for the example, you will need to change the de
 ## Releasing Updates
 One of best parts about `react-native-cp-update-button` is that it does not require any new tooling, you can just use the `code-push cli` like you normally would to push updates to your React Native app. This is where you are able to set a `promptMessage` for this specific release, which will be used by the `<UpdateAppButton />` component. You can do this by giving a value for the `--description` option in the cli. Check out the docs on [releasing with `CodePush`](https://github.com/Microsoft/react-native-code-push#releasing-updates) for more detail.
 
-If a value for `promptMessage` was passed to `<UpdateAppButton />` as a prop in the application, it will only be used if no value for `--description` was added when releasing the update.
+If a value for `promptMessage` was passed to `<UpdateAppButton />` as a prop in the application, it will only be used if no value for `--description` was set when releasing the update.
 
 #### Example Deployment
 Say you are happy with `v1.3.0`, you tag it (hopefully) and are about to release it using CodePush like you normally would. The only difference is now you will need to add the `--description` option and pass it a value.
