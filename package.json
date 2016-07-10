@@ -21,7 +21,7 @@
     "compile:dev": "babel src -w --out-dir example/UpdateButtonDemo/dev/react-native-cp-update-button",
     "prepublish": "npm run compile:dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "npm version 1.2.0 && git push && git push --tags && npm publish"
+    "release": "npm version 1.3.0 && git push && git push --tags && npm publish"
   },
   "files": [
     "dist"
