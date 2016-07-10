@@ -11,7 +11,7 @@ React Native CodePush Update Button
 * [Basic Usage](#basic-usage)
 * [Advanced Usage](#advanced-usage)
 * [Components](#components)
-	* [`<UpdateAppButton />`](#updateappbutton--)
+	* [`<UpdateAppButton />`](#updateappbutton-)
 	* [`<Middot />`](#middot-)
 * [Demo & Example](#example--demo)
 * [Releasing Updates](#releasing-updates)
@@ -54,11 +54,11 @@ class App extends React.Component {
 				...
 				<UpdateAppButton
 					component={AppLogo}
-					// default value for checkForUpdate is the below
+					// below is the default value for checkForUpdate
 					checkForUpdate={
 						onMount: true, // will check on mount of the component
 						onResume: false, // will check when the app resumes
-						onInterval: false, // will check every interval in milliseconds (checkEvery)
+						onInterval: false, // will check every interval in milliseconds (checkEvery) while the component is mounted
 						checkEvery: 5 * 60 * 1000 // the length of the interval that ^ will use if true
 					},
 				/>
