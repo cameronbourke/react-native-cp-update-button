@@ -19,7 +19,7 @@ import {
 APP_VERSION would usually live in a constants module where
 you would increment it each time you release a new version
 */
-const APP_VERSION = 'v1.7.4';
+const APP_VERSION = 'v1.7.5';
 
 const AppVersion = () => (
 	<Text style={styles.appVersion}>
@@ -45,7 +45,16 @@ class UpdateButtonDemo extends React.Component {
 				<Panels selectedIndex={this.state.selectedIndex} style={{ flex: 7 }}>
 
 					{/* Example 1 */}
-					<UpdateAppButton component={AppName} />
+					<UpdateAppButton
+						component={AppName}
+						// below is the default configuration
+						checkForUpdate={{
+						  onMount: false, // will check on mount of the component
+						  onResume: false, // will check when the app resumes
+						  onInterval: true, // will check every interval in milliseconds (checkEvery)
+						  checkEvery: 1 * 30 * 1000 // the length of the interval that ^ will use if true
+						}}
+					/>
 
 					{/* Example 2 */}
 					<UpdateAppButton

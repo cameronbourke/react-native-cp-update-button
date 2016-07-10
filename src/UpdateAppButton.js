@@ -6,25 +6,28 @@ import { getVersionMetaData } from './lib/utils';
 import makeCancelable from './lib/makeCancelable';
 
 export class UpdateAppButton extends Component {
-	constructor ({ checkForUpdateOn, checkInterval }) {
+	constructor ({ checkForUpdate }) {
 		super();
 		this.state = { newVersion: null };
 		this.handleUpdatePress = this.handleUpdatePress.bind(this);
 		this._handleNewVersion = this._handleNewVersion.bind(this);
 		this.install = this.install.bind(this);
 
-		if (checkForUpdateOn === 'resume') {
+		if (checkForUpdate.onResume) {
 			this._onAppStateChange =  (newState) => newState === 'active' && this._checkForUpdate();
 			AppState.addEventListener('change', this._onAppStateChange);
 		}
 
-		if (checkForUpdateOn === 'interval') {
-			this._interval = setTimeout(() => this._checkForUpdate(), checkInterval);
+		if (checkForUpdate.onInterval) {
+			this._interval = setTimeout(
+				() => this._checkForUpdate(),
+				checkForUpdate.checkEvery
+			);
 		}
 	}
 
 	componentDidMount () {
-		if (this.props.checkForUpdateOn === 'mount') this._checkForUpdate();
+		if (this.props.checkForUpdate.onMount) this._checkForUpdate();
 	}
 
 	componentWillUnmount () {
@@ -81,8 +84,12 @@ export class UpdateAppButton extends Component {
 UpdateAppButton.defaultProps = {
 	animate: true,
 	updateOnPress: false,
-	checkForUpdateOn: 'mount',
-	checkInterval: 60 * 1000,
+	checkForUpdate: {
+		onMount: true, // will check on mount of the component
+		onResume: false, // will check when the app resumes
+		onInterval: false, // will check every interval in milliseconds (checkEvery)
+		checkEvery: 5 * 60 * 1000 // the length of the interval that ^ will use if true
+	},
 	promptTitle: 'New Update Available',
 	promptMessage: 'A new update is now available. Do you want to update now? Note: Updating will restart the app and any changes not saved will be lost.',
 	cancelButtonText: 'Cancel',
@@ -93,8 +100,12 @@ UpdateAppButton.propTypes = {
 	animate: PropTypes.bool,
 	updateOnPress: PropTypes.bool,
 	component: PropTypes.func.isRequired,
-	checkForUpdateOn: PropTypes.oneOf(['mount', 'resume', 'interval']),
-	checkInterval: PropTypes.number,
+	checkForUpdate: PropTypes.shape({
+		onMount: React.PropTypes.bool,
+		onResume: React.PropTypes.bool,
+		onInterval: React.PropTypes.bool,
+		checkEvery: React.PropTypes.number,
+	}),
 	promptTitle: PropTypes.string,
 	promptMessage: PropTypes.string,
 	cancelButtonText: PropTypes.string,
