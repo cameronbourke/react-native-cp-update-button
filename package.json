@@ -1,6 +1,6 @@
 {
   "name": "react-native-cp-update-button",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "The goal of this component is to make the workflow of letting your users explicitly update the app as simple as CodePush.sync()",
   "main": "dist/index.js",
   "keywords": [
