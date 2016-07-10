@@ -52,7 +52,16 @@ class App extends React.Component {
 		return (
 			<View>
 				...
-				<UpdateAppButton component={AppLogo} />
+				<UpdateAppButton
+					component={AppLogo}
+					// default value for checkForUpdate is the below
+					checkForUpdate={
+						onMount: true, // will check on mount of the component
+						onResume: false, // will check when the app resumes
+						onInterval: false, // will check every interval in milliseconds (checkEvery)
+						checkEvery: 5 * 60 * 1000 // the length of the interval that ^ will use if true
+					},
+				/>
 			</View>
 		)
 	}
@@ -79,12 +88,12 @@ This component gives you the ability to simply invoke a function to show a confi
 | animate           | boolean  | true        | LayoutAnimation.configureNext will be called when a new version becomes available, animating any layout change in the next render
 | component         | function | (required)  | react component will be rendered, [see usage for more details](#basic-version)
 | updateOnPress     | bool     | false       | whether to update the app immediately without showing the confirm prompt
-| checkForUpdateOn  | string   | mount       | *Accepted Values*: each of which will check for a new `CodePush` version: <ul><li>**mount**: checks on `componentWillMount` of `<UpdateAppButton />`</li>**resume**: uses `AppState` to only check when the app resumes<li>**interval**: continually checks after a specified length of time (`checkInterval`)</li></ul>
-| checkInterval     | number   | 60 * 1000   | if the value set for `checkForUpdateOn` is `interval`, this prop determines how often in milliseconds to check for a new version from `CodePush`
+| checkForUpdate    | object   | [see basic usage](#basic-usage) | one of the best parts about `codePush.sync` is how easy it's to configure how and when to check whether there are any new `CodePush` updates, so that same easy to configure behaviour can be achieved using this prop. If one or more of the properties are set to true, say `mount` and `resume` for example, the component will check for an update on both `componentWillMount` and when the `app resumes`.
 | promptTitle       | string   | New Update Available | short title of the confirmation prompt shown to the user
 | promptMessage     | string   | A new update is now available. Do you want to update now? Note: Updating will restart the app and any changes not saved will be lost.| body of the confirmation prompt shown to the user
 | cancelButtonText  | string   | Cancel      | the text for the confirmation prompt's cancel button
 | confirmButtonText | string   | Update Now  | the text for the confirmation prompt's confirm button
+
 </br>
 
 #### `<Middot />`
@@ -109,10 +118,7 @@ Then open the Xcode project at `ios/UpdateButtonDemo.xcodeproj`
 Currently `npm link` does not work with React Native's packager, so, to temporarily get around that, `npm start` actually runs a babel command that will output the `/src` directory into `/example/UpdateButtonDemo/dev` which explains why you will see the following when in the example app:
 
 ```js
-import {
-	UpdateAppButton,
-	Middot,
-} from './dev/react-native-cp-update-button';
+import { UpdateAppButton, Middot } from './react-native-cp-update-button';
 ```
 
 #### Changing the CodePush Deployment Key
